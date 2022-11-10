@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Shoppiandroid">
 
         <activity
-            android:name="com.shoppi.app.SplashActivity"
+            android:name="com.shoppi.app.ui.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Shoppiandroid.Splash">
             <intent-filter>
@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="false" />
 
     </application>

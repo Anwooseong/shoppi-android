@@ -1,4 +1,4 @@
-package com.shoppi.app
+package com.shoppi.app.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -8,13 +8,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
-import org.json.JSONObject
+import com.shoppi.app.*
 
 class HomeFragment : Fragment() {
+
+    private val viewModel: HomeViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,12 +46,19 @@ class HomeFragment : Fragment() {
             val gson = Gson()
             val homeData = gson.fromJson(homeJsonString, HomeData::class.java)
 
-            toolbarTitle.text = homeData.title.text
-            GlideApp.with(this).load(homeData.title.iconUrl).into(toolbarIcon)
-
-            viewpager.adapter = HomeBannerAdapter().apply {
-                submitList(homeData.topBanners)
+            //viewLifecycleOwner 는 lifecycle 이 변경되는 알림을 받아 현재 lifecycle 상태를 알고 있는 객체를 의미
+            viewModel.title.observe(viewLifecycleOwner) { title->
+                toolbarTitle.text = title.text
+                GlideApp.with(this).load(title.iconUrl).into(toolbarIcon)
             }
+
+
+            viewModel.topBanners.observe(viewLifecycleOwner) { banners->
+                viewpager.adapter = HomeBannerAdapter().apply {
+                    submitList(banners)
+                }
+            }
+
 
 
             val pageWidth = resources.getDimension(R.dimen.viewpager_item_width)
