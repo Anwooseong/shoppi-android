@@ -1,17 +1,16 @@
 package com.shoppi.app
 
 import android.content.Context
-import android.util.Log
 
-class AssertLoader {
+class AssertLoader(private val context: Context) {
 
-    fun getJsonString(context: Context, fileName: String): String? {
+    fun getJsonString(fileName: String): String? {
         return kotlin.runCatching {
-            loadAssert(context, fileName)
+            loadAssert(fileName)
         }.getOrNull()
     }
 
-    private fun loadAssert(context: Context, fileName: String): String {
+    private fun loadAssert(fileName: String): String {
         return context.assets.open(fileName).use { inputStream->
             val size = inputStream.available()
             val bytes = ByteArray(size)
