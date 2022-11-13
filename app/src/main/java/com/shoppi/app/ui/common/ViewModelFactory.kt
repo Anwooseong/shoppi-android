@@ -4,8 +4,12 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.shoppi.app.AssertLoader
-import com.shoppi.app.repository.HomeAssertDataSource
-import com.shoppi.app.repository.HomeRepository
+import com.shoppi.app.network.ApiClient
+import com.shoppi.app.repository.category.CategoryRemoteDataSource
+import com.shoppi.app.repository.category.CategoryRepository
+import com.shoppi.app.repository.home.HomeAssertDataSource
+import com.shoppi.app.repository.home.HomeRepository
+import com.shoppi.app.ui.category.CategoryViewModel
 import com.shoppi.app.ui.home.HomeViewModel
 
 class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
@@ -13,8 +17,14 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             val repository = HomeRepository((HomeAssertDataSource(AssertLoader(context))))
             return HomeViewModel(repository) as T
-        } else {
+        }
+        else if (modelClass.isAssignableFrom(CategoryViewModel::class.java)) {
+            val repository = CategoryRepository(CategoryRemoteDataSource(ApiClient.create()))
+            return CategoryViewModel(repository) as T
+        }
+        else {
             throw IllegalArgumentException("Failed to create ViewModel: ${modelClass::class.java}")
         }
     }
+
 }

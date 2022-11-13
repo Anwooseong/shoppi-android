@@ -52,6 +52,16 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.0.2')
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
+    //Network
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation platform("com.squareup.okhttp3:okhttp-bom:4.9.0")
+    implementation "com.squareup.okhttp3:okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor"
+
+    //코루틴
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
 
     //뷰페이저2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
